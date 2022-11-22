@@ -43,8 +43,8 @@ class T5Encoder(torch.nn.Module):
             self.encoder.run(
                 None,
                 {
-                    "input_ids": input_ids.cpu().numpy(),
-                    "attention_mask": attention_mask.cpu().numpy(),
+                    "input_ids": input_ids,
+                    "attention_mask": attention_mask,
                 },
             )[0]
         )
@@ -62,9 +62,9 @@ class T5DecoderInit(torch.nn.Module):
         decoder_outputs = self.decoder.run(
             None,
             {
-                "input_ids": input_ids.cpu().numpy(),
-                "encoder_attention_mask": encoder_attention_mask.cpu().numpy(),
-                "encoder_hidden_states": encoder_hidden_states.cpu().numpy(),
+                "input_ids": input_ids,
+                "encoder_attention_mask": encoder_attention_mask,
+                "encoder_hidden_states": encoder_hidden_states,
             },
         )
 
@@ -85,9 +85,9 @@ class T5Decoder(torch.nn.Module):
     def forward(self, input_ids, attention_mask, encoder_output, past_key_values):
 
         decoder_inputs = {
-            "input_ids": input_ids.cpu().numpy(),
-            "encoder_attention_mask": attention_mask.cpu().numpy(),
-            "encoder_hidden_states": encoder_output.cpu().numpy(),
+            "input_ids": input_ids,
+            "encoder_attention_mask": attention_mask,
+            "encoder_hidden_states": encoder_output,
         }
 
         flat_past_key_values = functools.reduce(operator.iconcat, past_key_values, [])
